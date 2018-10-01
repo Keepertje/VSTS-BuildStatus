@@ -21,6 +21,9 @@ This script will simply light up a LED light depending on the status of your bui
 - jumper cables (male-to-male and male-to-female if working with a breadboard)
 - A breadboard, proto-HAT or similar
 
+### Assembly
+<img src="Documentation/build-light.png" alt="Fritzing" title="Fritzing"  width="450" />
+
 ## Installation
 - Install the VSTS Python API
     ```sh
