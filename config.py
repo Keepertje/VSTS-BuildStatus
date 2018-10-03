@@ -6,4 +6,5 @@ gpios = {
 	'red': 18,
 	'yellow': 23,
 	'green': 24
+	'button': 21
 }

@@ -4,7 +4,9 @@ import time
 import signal
 
 from vsts.vss_connection import VssConnection
+from vsts.build.v4_0.models import Build
 from msrest.authentication import BasicAuthentication
+from gpiozero import Button
 
 import config as cfg
 import lightcontroller as light
@@ -13,7 +15,7 @@ import lightcontroller as light
 keepAlive = True
 currentStatus = 'none'
 currentResult = 'none'
-
+triggerButton = Button(18)
 
 """set up a connection to VSTS.
 Relies on the parameters set in config.py
@@ -54,6 +56,21 @@ def checkBuildStatus():
         setStatusLights(currentStatus, currentResult)
     return
 
+""" Starts a new build
+
+"""
+def triggerBuild():
+    global currentStatus
+    if currentStatus != 'inProgress':
+        pprint.pprint("Build triggered")
+        definition = client.get_definition(cfg.vstsbuilddefinition, cfg.vstsprojectname, include_latest_builds = True)
+        build =  Build()
+        build.definition = definition
+
+        client.queue_build(build, cfg.vstsprojectname)
+    return
+
+triggerButton.when_pressed = triggerBuild
 
 """ Main loop
 
